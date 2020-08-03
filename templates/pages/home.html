@@ -34,11 +34,24 @@
 
         function handleTweetFormSubmit(event) {
             event.preventDefault();
-            console.log(event);
+            const myForm = event.target;
+            const myFormData = new FormData(myForm);
+            const url = myForm.getAttribute("action");
+            const method = myForm .getAttribute("method");
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+            xhr.onload = function () {
+                const serverResponse = xhr.response;
+                loadTweets(tweetsEl);
+                console.log(xhr.status,serverResponse);
+            }
+            xhr.send(myFormData);
         }
 
-        tweetCreateEl.addEventListener("submit", handleTweetFormSubmit);
 
+        tweetCreateEl.addEventListener("submit", handleTweetFormSubmit);
 
         const tweetsEl = document.getElementById("tweets");
 

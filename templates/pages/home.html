@@ -5,10 +5,17 @@
 {% endblock %}
 {% block content %}
 
-    <h1>Hello Tweetme</h1>
-    <div id="tweets">
-         loading ..
+    <div class="row text-center">
+        <div class="col">
+            <h1>Hello Tweetme</h1>
+        </div>
     </div>
+    <div class="row" id="tweets">
+        loading ..
+    </div>
+
+
+
     <script>
         const tweetsElement = document.getElementById("tweets");
         const xhr = new XMLHttpRequest();
@@ -22,7 +29,7 @@
             var listedItem = serverResponse.response;
             var finalTweetsStr = "";
             var i;
-            for ( i = 0; i < listedItem.length ; i++) {
+            for (i = 0; i < listedItem.length; i++) {
                 var tweetObj = listedItem[i];
                 var currentItem = formatTweetElement(tweetObj);
                 finalTweetsStr += currentItem;
@@ -31,20 +38,20 @@
         }
         xhr.send();
 
-        function formatTweetElement(tweet){
-            return "<div class='mb-4' id='tweet-"+tweet.id+"'>" +
-                "<p>" + tweet.content +"</p>"+
-                "<div class='btn btn-group'>"+likeBtn(tweet)+"</div>"+
+        function formatTweetElement(tweet) {
+            return "<div class='col-12 col-md-10 mx-auto mb-4 border rounded  py-3' id='tweet-" + tweet.id + "'>" +
+                "<p>" + tweet.content + "</p>" +
+                "<div class='btn btn-group'>" + likeBtn(tweet) + "</div>" +
                 "</div>";
         }
 
-        function likeBtn(tweet){
-            return "<button class='btn btn-primary btn-sm' onclick='handleDidLike("+tweet.id+","+tweet.likes+")'>" +
-                ""+tweet.likes+"  Like</button>";
+        function likeBtn(tweet) {
+            return "<button class='btn btn-primary btn-sm' onclick='handleDidLike(" + tweet.id + "," + tweet.likes + ")'>" +
+                "" + tweet.likes + "  Like</button>";
         }
 
-        function handleDidLike(tweet_id, currentCount){
-            console.log(tweet_id,currentCount);
+        function handleDidLike(tweet_id, currentCount) {
+            console.log(tweet_id, currentCount);
             currentCount++;
 
         }

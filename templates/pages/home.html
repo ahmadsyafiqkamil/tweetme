@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+    TES
+{% endblock %}
+{% block content %}
+
+    <h1>Hello Tweetme</h1>
+    <div id="tweets">
+         loading ..
+    </div>
+    <script>
+        const tweetsElement = document.getElementById("tweets");
+        const xhr = new XMLHttpRequest();
+        const method = 'GET';
+        const url = "/tweets";
+        const respType = "json";
+
+        function formatTweetElement(tweet){
+            return "<div class='mb-4' id='tweet-"+tweet.id+"'>" +
+                "<p>" + tweet.content +likeBtn()+ "</p>" +
+                "</div>";
+        }
+
+        function likeBtn(){
+            return "<button class='btn btn-primary'>Like</button>"
+        }
+        xhr.responseType = respType;
+        xhr.open(method, url);
+        xhr.onload = function () {
+            const serverResponse = xhr.response;
+            var listedItem = serverResponse.response;
+            var finalTweetsStr = "";
+            var i;
+            for ( i = 0; i < listedItem.length ; i++) {
+                var tweetObj = listedItem[i];
+                var currentItem = formatTweetElement(tweetObj);
+                finalTweetsStr += currentItem;
+            }
+            tweetsElement.innerHTML = finalTweetsStr;
+        }
+        xhr.send();
+
+    </script>
+{% endblock %}

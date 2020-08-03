@@ -39,13 +39,17 @@
             const url = myForm.getAttribute("action");
             const method = myForm .getAttribute("method");
             const xhr = new XMLHttpRequest();
+            const respType = "json";
+            xhr.responseType = respType;
             xhr.open(method, url);
             xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
             xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
             xhr.onload = function () {
-                const serverResponse = xhr.response;
-                loadTweets(tweetsEl);
-                console.log(xhr.status,serverResponse);
+                if (xhr.status === 201){
+                    const newTweetJson = xhr.response
+                    const newTweetEl = formatTweetElement(newTweetJson)
+                    tweetContainerEl.prepend(newTweetEl)
+                }
             }
             xhr.send(myFormData);
         }
@@ -53,7 +57,7 @@
 
         tweetCreateEl.addEventListener("submit", handleTweetFormSubmit);
 
-        const tweetsEl = document.getElementById("tweets");
+        const tweetContainerEl = document.getElementById("tweets");
 
         function loadTweets(tweetsElement) {
             const xhr = new XMLHttpRequest();
@@ -77,7 +81,7 @@
             xhr.send();
         }
 
-        loadTweets(tweetsEl);
+        loadTweets(tweetContainerEl);
 
         function formatTweetElement(tweet) {
             return "<div class='col-12 col-md-10 mx-auto mb-4 border rounded  py-3' id='tweet-" + tweet.id + "'>" +

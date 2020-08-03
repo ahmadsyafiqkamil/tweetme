@@ -15,16 +15,6 @@
         const method = 'GET';
         const url = "/tweets";
         const respType = "json";
-
-        function formatTweetElement(tweet){
-            return "<div class='mb-4' id='tweet-"+tweet.id+"'>" +
-                "<p>" + tweet.content +likeBtn()+ "</p>" +
-                "</div>";
-        }
-
-        function likeBtn(){
-            return "<button class='btn btn-primary'>Like</button>"
-        }
         xhr.responseType = respType;
         xhr.open(method, url);
         xhr.onload = function () {
@@ -40,6 +30,24 @@
             tweetsElement.innerHTML = finalTweetsStr;
         }
         xhr.send();
+
+        function formatTweetElement(tweet){
+            return "<div class='mb-4' id='tweet-"+tweet.id+"'>" +
+                "<p>" + tweet.content +"</p>"+
+                "<div class='btn btn-group'>"+likeBtn(tweet)+"</div>"+
+                "</div>";
+        }
+
+        function likeBtn(tweet){
+            return "<button class='btn btn-primary btn-sm' onclick='handleDidLike("+tweet.id+","+tweet.likes+")'>" +
+                ""+tweet.likes+"  Like</button>";
+        }
+
+        function handleDidLike(tweet_id, currentCount){
+            console.log(tweet_id,currentCount);
+            currentCount++;
+
+        }
 
     </script>
 {% endblock %}

@@ -76,6 +76,10 @@
                 }else if (xhr.status === 500) {
                     alert("server error")
                 }
+                else if (xhr.status === 403) {
+                    alert("login please")
+                    window.location.href = "/login"
+                }
             }
             xhr.onerror = function () {
                 alert("error ")

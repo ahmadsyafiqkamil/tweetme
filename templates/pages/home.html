@@ -97,7 +97,7 @@
             xhr.open(method, url);
             xhr.onload = function () {
                 const serverResponse = xhr.response;
-                var listedItem = serverResponse.response;
+                var listedItem = serverResponse;
                 var finalTweetsStr = "";
                 var i;
                 for (i = 0; i < listedItem.length; i++) {

@@ -2,6 +2,14 @@ import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+function Tweet(props) {
+    const {tweet} = props
+    const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
+    return (<div className={className}>
+        <p>{tweet.id}-{tweet.content}</p>
+
+    </div>)
+}
 
 function App() {
     const [tweet, setTweet] = useState([])
@@ -10,7 +18,7 @@ function App() {
             console.log(response, status)
             if (status === 200) {
                 setTweet(response)
-            }else{
+            } else {
                 alert("error")
             }
         }
@@ -24,9 +32,10 @@ function App() {
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
                 </p>
-                <p>{tweet.map((tweet, index) => {
-                    return <li>{tweet.content}</li>
-                })}</p>
+                <div>{tweet.map((item, index) => {
+                    return <Tweet tweet={item} className="my-5 py-5 border bg-white text-dark" key={`${index} - {item.id}`}/>
+                })}
+                </div>
                 <a
                     className="App-link"
                     href="https://reactjs.org"
@@ -50,9 +59,9 @@ function loadTweets(callback) {
     xhr.onload = function () {
         callback(xhr.response, xhr.status)
     }
-    xhr.onerror= function (e){
+    xhr.onerror = function (e) {
         console.log(e)
-        callback({"message":"error"},400)
+        callback({"message": "error"}, 400)
     }
     xhr.send();
 }

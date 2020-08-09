@@ -24,7 +24,10 @@ SECRET_KEY = 'wpr7$u#msw1cp)ur7$#3)25j*6z6m4=&m7p(kf%(sc*qsdpkh2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1","localhost"]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 # Application definition
 
@@ -38,7 +41,8 @@ INSTALLED_APPS = [
 
     'tweets',
 
-    "rest_framework"
+    "rest_framework",
+    'corsheaders'
 
 ]
 
@@ -50,6 +54,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
 ]
 
 ROOT_URLCONF = 'tweetme.urls'
